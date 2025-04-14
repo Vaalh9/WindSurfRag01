@@ -1,5 +1,7 @@
 # MarkitDown RAG
 
+[![GitHub](https://img.shields.io/github/license/Vaalh9/WindSurfRag01)](https://github.com/Vaalh9/WindSurfRag01)
+
 Un système RAG (Retrieval-Augmented Generation) 100% local pour les fichiers Markdown.
 
 ## Composants
