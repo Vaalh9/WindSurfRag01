@@ -4,11 +4,18 @@
 Créer un système RAG (Retrieval-Augmented Generation) 100% local pour les fichiers Markdown, utilisant Mistral comme LLM.
 
 ## 📚 Stack Technique
+- **Framework**: LlamaIndex (anciennement GPTIndex)
 - **LLM**: Mistral 7B (version quantifiée Q4_K_M)
 - **Embeddings**: Sentence-Transformers (all-MiniLM-L6-v2)
-- **Vector Store**: ChromaDB
+- **Vector Store**: Simple Vector Store (intégré à LlamaIndex)
 - **API**: FastAPI
 - **Langage**: Python 3.9+
+
+## 💡 Pourquoi LlamaIndex ?
+- Architecture plus simple et plus intuitive que LangChain
+- Meilleure intégration avec les LLMs locaux
+- Gestion optimisée des documents structurés
+- Support natif des documents Markdown
 
 ## 🛠 Guide d'Installation et de Déploiement
 
@@ -49,36 +56,62 @@ markitdown-rag/
 ├── requirements.txt    # Dépendances Python
 ├── README.md          # Documentation utilisateur
 ├── DEVBOOK.md         # Documentation développeur
-└── models/            # Dossier contenant les modèles
-    └── mistral-7b-v0.1.Q4_K_M.gguf
+├── models/            # Dossier contenant les modèles
+│   └── mistral-7b-v0.1.Q4_K_M.gguf
+└── storage/           # Stockage des index et embeddings
+    ├── embeddings/
+    └── index/
 ```
 
 ### Points Techniques Importants
 
-#### Configuration du LLM (app.py)
+#### Configuration du LLM et Index (app.py)
 ```python
-llm = LlamaCpp(
+from llama_index.llms import LlamaCPP
+from llama_index.embeddings import HuggingFaceEmbedding
+
+# Configuration du LLM
+llm = LlamaCPP(
     model_path="models/mistral-7b-v0.1.Q4_K_M.gguf",
     temperature=0.7,
     max_tokens=2000,
-    top_p=0.95,
-    n_ctx=4096,
-    n_gpu_layers=0  # -1 pour utiliser le GPU
+    context_window=4096,
+    model_kwargs={"n_gpu_layers": 0}  # -1 pour GPU
+)
+
+# Configuration des embeddings
+embedding_model = HuggingFaceEmbedding(model_name="all-MiniLM-L6-v2")
+
+# Configuration de l'index
+service_context = ServiceContext.from_defaults(
+    llm=llm,
+    embed_model=embedding_model,
+    chunk_size=1000,
+    chunk_overlap=200
 )
 ```
 
-#### Paramètres d'Embeddings
-- Modèle: all-MiniLM-L6-v2
-- Dimension: 384
-- Performance: Excellent rapport qualité/vitesse
+#### Paramètres d'Index
+- **Chunking**:
+  - Taille: 1000 caractères
+  - Chevauchement: 200 caractères
+  - Mode de découpage: Markdown-aware
+
+- **Embeddings**:
+  - Modèle: all-MiniLM-L6-v2
+  - Dimension: 384
+  - Cache: Activé
 
 #### API Endpoints
 1. `/upload/` (POST)
    - Upload de fichiers Markdown
-   - Chunking et indexation automatique
+   - Création d'index automatique
+   - Stockage persistant
+
 2. `/query/` (POST)
-   - Recherche sémantique
-   - Génération de réponses contextuelles
+   - Recherche sémantique via LlamaIndex
+   - Réponses générées avec contexte
+   - Support du streaming
 
 ## 🔍 Tests et Validation
 
@@ -88,16 +121,24 @@ llm = LlamaCpp(
 3. Tester les requêtes
 
 ### Performances
-- Taille des chunks : 1000 tokens
-- Chevauchement : 200 tokens
-- Top-k pour la recherche : 3 documents
+- **Indexation** :
+  - Utilisation du cache d'embeddings
+  - Indexation incrémentielle
+  - Persistance automatique
+
+- **Recherche** :
+  - Top-k dynamique
+  - Reranking des résultats
+  - Filtrage par pertinence
 
 ## 📝 Notes de Développement
 
 ### Optimisations Possibles
-1. Ajout de caching pour les embeddings
-2. Parallélisation du traitement des documents
-3. Compression des index vectoriels
+1. Activation du mode GPU pour Mistral
+2. Mise en place d'un système de cache distribué
+3. Implémentation du streaming des réponses
+4. Ajout de métadonnées aux documents
+5. Configuration d'un pipeline de pré-traitement personnalisé
 
 ### Considérations de Sécurité
 - Validation des fichiers uploadés

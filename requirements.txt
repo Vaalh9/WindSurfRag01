@@ -1,11 +1,7 @@
-langchain==0.1.12
-chromadb==0.4.24
-markdown==3.5.2
+llama-index==0.10.5
+llama-cpp-python==0.2.56
+sentence-transformers==2.5.1
 fastapi==0.110.0
 uvicorn==0.27.1
-pydantic==2.6.3
 python-multipart==0.0.9
-sentence-transformers==2.5.1
-llama-cpp-python==0.2.56
 torch==2.2.1
-torchvision==0.17.1
