@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG de Valentin</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+    <link href="static/css/custom-fixes.css" rel="stylesheet">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <h1>RAG de Valentin</h1>
+            <nav class="tabs">
+                <button class="tab active" data-tab="upload">Upload</button>
+                <button class="tab" data-tab="chat">Chat</button>
+                <button class="tab" data-tab="result">Résultat</button>
+            </nav>
+        </header>
+
+        <main class="content">
+            <!-- Upload Tab -->
+            <div class="tab-content active" id="upload">
+                <div class="upload-container">
+                    <div class="dropzone" id="dropzone">
+                        <div class="dropzone-content">
+                            <span class="material-icons">cloud_upload</span>
+                            <p>Glissez vos fichiers ici ou cliquez pour sélectionner</p>
+                            <input type="file" id="fileInput" accept=".pdf,.md" multiple hidden>
+                        </div>
+                        <div class="processing-steps hidden" id="processingSteps">
+                            <h3>Traitement en cours...</h3>
+                            <div class="steps-container">
+                                <div class="step" data-step="extract">
+                                    <span class="material-icons">description</span>
+                                </div>
+                                <div class="step" data-step="parse">
+                                    <span class="material-icons">code</span>
+                                </div>
+                                <div class="step" data-step="chunk">
+                                    <span class="material-icons">content_cut</span>
+                                </div>
+                                <div class="step" data-step="embed">
+                                    <span class="material-icons">psychology</span>
+                                </div>
+                                <div class="step" data-step="index">
+                                    <span class="material-icons">save</span>
+                                </div>
+                            </div>
+                            <div class="step-labels">
+                                <div class="step-label" data-step="extract">Extraction<br>PDFPlumber</div>
+                                <div class="step-label" data-step="parse">Parsing<br>Nettoyage</div>
+                                <div class="step-label" data-step="chunk">Découpage<br>en chunks</div>
+                                <div class="step-label" data-step="embed">Génération<br>embeddings</div>
+                                <div class="step-label" data-step="index">Indexation<br>ChromaDB</div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar" id="progressBar" style="width: 0%">0%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Documents Tab -->
+            <div class="tab-content" id="documents">
+                <div class="documents-list" id="documentsList">
+                    <!-- Les documents seront ajoutés ici dynamiquement -->
+                </div>
+            </div>
+
+            <!-- Chat Tab -->
+            <div class="tab-content" id="chat">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Les messages seront ajoutés ici dynamiquement -->
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="messageInput" placeholder="Posez votre question...">
+                        <button id="sendMessage">
+                            <span class="material-icons">send</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Result Tab -->
+            <div class="tab-content" id="result">
+                <div class="result-container">
+                    <div class="result-header">
+                        <h2>Résultat de l'extraction</h2>
+                        <button id="downloadResultBtn" class="download-button">
+                            <span class="material-icons">download</span>
+                            Télécharger
+                        </button>
+                    </div>
+                    <div class="result-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Document:</span>
+                            <span id="resultDocumentName" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Type:</span>
+                            <span id="resultDocumentType" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Taille:</span>
+                            <span id="resultDocumentSize" class="detail-value">-</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">Texte extrait:</span>
+                            <span id="resultTextLength" class="detail-value">-</span>
+                        </div>
+                    </div>
+                    <div class="result-content" id="resultContent">
+                        <!-- Le contenu extrait sera affiché ici -->
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="static/js/fixed-app.js"></script>
+</body>
+</html>

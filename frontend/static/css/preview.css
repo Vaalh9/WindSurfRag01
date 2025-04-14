@@ -1,0 +1,101 @@
+/* Styles pour la section de prévisualisation */
+.preview-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background-color: rgba(20, 25, 40, 0.8);
+    border-radius: var(--border-radius);
+    border: var(--card-border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.preview-title {
+    font-family: 'Chakra Petch', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    border-bottom: 1px solid rgba(74, 158, 255, 0.3);
+    padding-bottom: 0.5rem;
+}
+
+.preview-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.extracted-data-header {
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    border: var(--glass-border);
+}
+
+.document-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.document-name {
+    font-weight: bold;
+    color: var(--accent-color);
+}
+
+.document-type {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem;
+    background-color: rgba(74, 158, 255, 0.2);
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.document-size {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+.extracted-text-container {
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: var(--border-radius);
+    border: var(--glass-border);
+}
+
+.extracted-text-container h4 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--accent-color);
+    font-size: 1.1rem;
+}
+
+.extracted-text {
+    margin-top: 10px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    color: var(--text-color);
+}
+
+/* Animation d'apparition */
+.preview {
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

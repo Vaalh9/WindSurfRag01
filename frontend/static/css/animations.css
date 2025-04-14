@@ -1,0 +1,63 @@
+/* Animations pour les étapes de traitement */
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.step.active .material-icons {
+    animation: pulse 1.5s infinite;
+}
+
+/* Animation de la barre de progression */
+@keyframes progressGlow {
+    0% {
+        box-shadow: 0 0 5px rgba(74, 158, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(74, 158, 255, 0.7);
+    }
+    100% {
+        box-shadow: 0 0 5px rgba(74, 158, 255, 0.3);
+    }
+}
+
+.step.active .progress-fill {
+    animation: progressGlow 2s infinite;
+}
+
+/* Animation pour l'étape complétée */
+@keyframes completedPop {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.step.completed .material-icons {
+    animation: completedPop 0.5s ease-out;
+}
+
+/* Animation pour le titre de l'étape */
+.step.active .step-content span:not(.material-icons):not(.tool-info) {
+    color: var(--primary-color);
+    font-weight: 600;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}
+
+.step.completed .step-content span:not(.material-icons):not(.tool-info) {
+    color: #4CAF50;
+    font-weight: 600;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+}

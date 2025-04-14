@@ -1,0 +1,76 @@
+/* Styles pour les messages d'erreur */
+.error-message {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff4a4a;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    max-width: 500px;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translateX(-50%) translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+    }
+}
+
+.error-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-icon .material-icons {
+    font-size: 24px;
+}
+
+.error-content {
+    flex: 1;
+}
+
+.error-content h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.error-content p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.error-close {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.error-close:hover {
+    opacity: 1;
+}
+
+.error-close .material-icons {
+    font-size: 20px;
+}

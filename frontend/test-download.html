@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de téléchargement</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #1e1e2f;
+            color: white;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 8px;
+            background-color: rgba(30, 30, 50, 0.7);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .download-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: transparent;
+            color: #4a9eff;
+            border: 1px solid #4a9eff;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            margin: 1rem auto;
+        }
+        
+        .download-button:hover {
+            background-color: rgba(74, 158, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Test du bouton de téléchargement</h2>
+        <p>Cliquez sur le bouton ci-dessous pour tester le téléchargement</p>
+        
+        <button id="testDownloadBtn" class="download-button">
+            <span class="material-icons">download</span> Télécharger le fichier test
+        </button>
+        
+        <div id="log"></div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const downloadBtn = document.getElementById('testDownloadBtn');
+            const logElement = document.getElementById('log');
+            
+            // Ajouter un log
+            function addLog(message) {
+                const logItem = document.createElement('div');
+                logItem.textContent = message;
+                logElement.appendChild(logItem);
+                console.log(message);
+            }
+            
+            // Contenu de test
+            const testContent = {
+                filename: "test-document.txt",
+                content: "Ceci est un contenu de test pour vérifier que le téléchargement fonctionne correctement.\n\nLigne 1\nLigne 2\nLigne 3",
+                type: "text"
+            };
+            
+            // Fonction de téléchargement
+            function downloadTestContent() {
+                addLog("Bouton cliqué");
+                
+                try {
+                    // Créer un blob avec le contenu de test
+                    const blob = new Blob([testContent.content], { type: 'text/plain' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    addLog("Blob créé: " + url);
+                    
+                    // Créer un lien de téléchargement et cliquer dessus
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `test_${testContent.filename}`;
+                    document.body.appendChild(a);
+                    
+                    addLog("Lien créé, téléchargement de: " + a.download);
+                    a.click();
+                    
+                    // Nettoyer
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                        addLog("Nettoyage effectué");
+                    }, 100);
+                } catch (error) {
+                    addLog("Erreur: " + error.message);
+                }
+            }
+            
+            // Ajouter l'événement de clic
+            downloadBtn.addEventListener('click', downloadTestContent);
+            addLog("Gestionnaire d'événement initialisé");
+        });
+    </script>
+</body>
+</html>

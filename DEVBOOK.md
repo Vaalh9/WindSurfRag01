@@ -10,6 +10,9 @@ Créer un système RAG (Retrieval-Augmented Generation) 100% local pour les fich
 - **Vector Store**: Simple Vector Store (intégré à LlamaIndex)
 - **API**: FastAPI
 - **Langage**: Python 3.9+
+- **Parseurs de Documents**:
+  - Markdown (natif)
+  - PDF (via PyPDF2)
 
 ## 💡 Pourquoi LlamaIndex ?
 - Architecture plus simple et plus intuitive que LangChain
@@ -18,6 +21,28 @@ Créer un système RAG (Retrieval-Augmented Generation) 100% local pour les fich
 - Support natif des documents Markdown
 
 ## 🛠 Guide d'Installation et de Déploiement
+
+### Installation Locale
+1. Cloner le dépôt
+2. Créer un environnement virtuel : `python -m venv venv`
+3. Activer l'environnement virtuel : `source venv/bin/activate` (Linux/Mac) ou `venv\Scripts\activate` (Windows)
+4. Installer les dépendances : `pip install -r requirements.txt`
+5. Lancer l'application : `uvicorn app:app --reload`
+
+### Déploiement avec Docker
+1. Construire l'image :
+   ```bash
+   docker build -t markitdown-rag .
+   ```
+
+2. Lancer le conteneur :
+   ```bash
+   docker run -d -p 8000:8000 -v $(pwd)/storage:/app/storage markitdown-rag
+   ```
+
+   Note : Sur Windows PowerShell, remplacer `$(pwd)` par `${PWD}` ou le chemin absolu.
+
+3. L'API sera disponible sur `http://localhost:8000`
 
 ### 1. Préparation de l'Environnement
 ```bash
